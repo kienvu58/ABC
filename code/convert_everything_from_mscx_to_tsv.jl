@@ -1,4 +1,4 @@
-using LightXML, DataFrames
+using LightXML, DataFrames, CSV
 
 "simple version of read_chord, does not calculate the beat information"
 function read_chords_with_measure_numbers(filename)
@@ -76,7 +76,7 @@ function read_chords(filename)
             attribute(measure_node, "number") == "1" && has_attribute(measure_node, "len")
 
         beat = chord_beat = if is_upbeat_measure
-            eval(parse(attribute(measure_node, "len"))) * 4
+            eval(Meta.parse(attribute(measure_node, "len"))) * 4
         else
             1.0
         end
@@ -99,7 +99,7 @@ function read_chords(filename)
                 continue
             elseif name(node) == "Chord" || name(node) == "Rest"
                 isa_grace_note = true in
-                    [ismatch(r"grace", name(n)) for n in child_elements(node)]
+                    [occursin(r"grace", name(n)) for n in child_elements(node)]
                 if isa_grace_note continue end
 
                 basic_value = durationdict[
@@ -129,7 +129,7 @@ function read_chords(filename)
             end
         end
         sum_of_beats += if is_upbeat_measure
-            eval(parse(attribute(measure_node, "len"))) * 4
+            eval(Meta.parse(attribute(measure_node, "len"))) * 4
         else
             beats_per_measure
         end
@@ -152,7 +152,7 @@ end
 
 mscx_dir = joinpath(@__DIR__, "..", "data", "mscx")
 
-tsv_dir = let dir = joinpath(@__DIR__, "..", "data", "tsv")
+csv_dir = let dir = joinpath(@__DIR__, "..", "data", "csv")
     if !isdir(dir)
         mkdir(dir)
     end
@@ -160,15 +160,15 @@ tsv_dir = let dir = joinpath(@__DIR__, "..", "data", "tsv")
 end
 
 for dir in filter(d->isdir(joinpath(mscx_dir, d)), readdir(mscx_dir))
-    if !isdir(joinpath(tsv_dir, dir))
-        mkdir(joinpath(tsv_dir, dir))
+    if !isdir(joinpath(csv_dir, dir))
+        mkdir(joinpath(csv_dir, dir))
     end
-    for file in filter(f->ismatch(r".mscx", f), readdir(joinpath(mscx_dir, dir)))
-        out = splitext(file)[1] * ".tsv"
+    for file in filter(f->occursin(r".mscx", f), readdir(joinpath(mscx_dir, dir)))
+        out = splitext(file)[1] * ".csv"
         try
             df = read_chords(joinpath(mscx_dir, dir, file))
-            out = splitext(file)[1] * ".tsv"
-            writetable(joinpath(tsv_dir, dir, out), df)
+            out = splitext(file)[1] * ".csv"
+            CSV.write(joinpath(csv_dir, dir, out), df)
         catch e
             println(file)
             sleep(3)

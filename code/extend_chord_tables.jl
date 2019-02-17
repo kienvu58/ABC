@@ -1,7 +1,7 @@
 include("regex.jl")
 include("movement_iterator.jl")
 
-using DataFrames
+using DataFrames, CSV
 
 function get_feature(chord, feature, default="", regex=regex)
     m = match(regex, chord)
@@ -15,7 +15,7 @@ function extend_chord_table(df)
     end
     df[:length] = [
         map(bg->bg[2]-bg[1], bigrams(df[:totbeat]));
-        (eval(parse(replace(df[end, :timesig], "/", "//"))) * 4) + 1 - df[end, :beat]
+        (eval(Meta.parse(replace(df[end, :timesig], "/" => "//"))) * 4) + 1 - df[end, :beat]
         ]
 
     # add global_key column
@@ -23,7 +23,7 @@ function extend_chord_table(df)
 
     # add local_key column
     df[:local_key] = ""
-    df[1, :local_key] = "I"
+    df[1, :local_key] = match(regex, df[1, :chord])[:numeral]
 
     for i in 2:size(df, 1)
         df[i, :local_key] = get_feature(df[i, :chord], :key, df[i-1, :local_key])
@@ -63,11 +63,10 @@ end
 
 for file in movements()
     # println(file)
-    writetable(file, extend_chord_table(readtable(file, nastrings=["NA"])))
+    CSV.write(file, extend_chord_table(CSV.read(file)))
 end
 
 # create big dataframe
-writetable(
-    joinpath(@__DIR__, "..", "data", "all_annotations.tsv"),
-    vcat(readtable.(movements(), )...),
-    nastring="\"\"")
+CSV.write(
+    joinpath(@__DIR__, "..", "data", "all_annotations.csv"),
+    vcat(CSV.read.(movements(), )...))
