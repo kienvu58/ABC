@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <museScore version="2.06">
-  <programVersion>2.1.0</programVersion>
-  <programRevision>871c8ce</programRevision>
+  <programVersion>2.3.2</programVersion>
+  <programRevision>4592407</programRevision>
   <Score>
     <LayerTag id="0" tag="default"></LayerTag>
     <currentLayer>0</currentLayer>
@@ -610,7 +610,7 @@ Op. 130 2nd Movement
           <yoffset>6.1</yoffset>
           </Dynamic>
         <Harmony>
-          <name>.b.i</name>
+          <name>.bb.i</name>
           <pos x="-0.0838784" y="-2.26748"/>
           </Harmony>
         <Chord>
