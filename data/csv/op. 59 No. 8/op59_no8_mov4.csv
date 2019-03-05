@@ -1,5 +1,5 @@
 chord,altchord,measure,beat,totbeat,timesig,op,no,mov,length,global_key,local_key,pedal,numeral,form,figbass,changes,relativeroot,phraseend
-.e.VI,,1,1.0,1.0,2/2,59,8,4,4.0,e,VI,,VI,,,,,false
+.e.VI,,1,1.0,1.0,2/2,59,8,4,4.0,e,i,,VI,,,,,false
 VI.I,,2,1.0,5.0,2/2,59,8,4,2.0,e,VI,,I,,,,,false
 I(64),,2,3.0,7.0,2/2,59,8,4,2.0,e,VI,,I,,,64,,false
 I,,3,1.0,9.0,2/2,59,8,4,6.0,e,VI,,I,,,,,false

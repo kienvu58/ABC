@@ -19,11 +19,16 @@ function extend_chord_table(df)
         ]
 
     # add global_key column
-    df[:global_key] = match(regex, df[1, :chord])[:key]
+    global_key_name = match(regex, df[1, :chord])[:key]
+    df[:global_key] = global_key_name
 
     # add local_key column
     df[:local_key] = ""
-    df[1, :local_key] = match(regex, df[1, :chord])[:numeral]
+    if global_key_name == lowercase(global_key_name)
+        df[1, :local_key] = "i"
+    else
+        df[1, :local_key] = "I"
+    end
 
     for i in 2:size(df, 1)
         df[i, :local_key] = get_feature(df[i, :chord], :key, df[i-1, :local_key])

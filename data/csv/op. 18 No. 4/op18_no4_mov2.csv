@@ -1,9 +1,9 @@
 chord,altchord,measure,beat,totbeat,timesig,op,no,mov,length,global_key,local_key,pedal,numeral,form,figbass,changes,relativeroot,phraseend
-.C.V,,1,1.0,1.0,3/8,18,4,2,1.5,C,V,,V,,,,,false
-I,,2,1.0,2.5,3/8,18,4,2,3.0,C,V,,I,,,,,false
-V6,,4,1.0,5.5,3/8,18,4,2,1.5,C,V,,V,,6,,,false
-I,,5,1.0,7.0,3/8,18,4,2,1.0,C,V,,I,,,,,false
-vi6,,5,2.0,8.0,3/8,18,4,2,0.5,C,V,,vi,,6,,,false
+.C.V,,1,1.0,1.0,3/8,18,4,2,1.5,C,I,,V,,,,,false
+I,,2,1.0,2.5,3/8,18,4,2,3.0,C,I,,I,,,,,false
+V6,,4,1.0,5.5,3/8,18,4,2,1.5,C,I,,V,,6,,,false
+I,,5,1.0,7.0,3/8,18,4,2,1.0,C,I,,I,,,,,false
+vi6,,5,2.0,8.0,3/8,18,4,2,0.5,C,I,,vi,,6,,,false
 V.V,,6,1.0,8.5,3/8,18,4,2,1.0,C,V,,V,,,,,false
 V7,,6,2.0,9.5,3/8,18,4,2,0.5,C,V,,V,,7,,,false
 I,,7,1.0,10.0,3/8,18,4,2,1.5,C,V,,I,,,,,false
